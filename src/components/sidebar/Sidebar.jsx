@@ -4,28 +4,16 @@ import './sidebar.scss';
 
 const sidebarNavItems = [
     {
-        display: '実行した記録の一覧',
+        display: 'land check',
         icon: <i className='bx bx-home'></i>,
         to: '/',
         section: ''
     },
     {
-        display: '行数・日付',
+        display: 'task',
         icon: <i className='bx bx-star'></i>,
-        to: '/started',
-        section: 'started'
-    },
-    {
-        display: 'ユーザー',
-        icon: <i className='bx bx-user'></i>,
-        to: '/user',
-        section: 'user'
-    },
-    {
-        display: '実行結果',
-        icon: <i className='bx bx-receipt'></i>,
-        to: '/order',
-        section: 'order'
+        to: '/task',
+        section: 'task'
     },
 ]
 
