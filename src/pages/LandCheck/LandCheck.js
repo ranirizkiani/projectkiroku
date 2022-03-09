@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PostForm from '../components/PostForm.js'
+import PostForm from '../../components/PostForm.js'
 import "./LandCheck.css"
-import Header from '../components/Header.js'
+import Header from '../../components/Header.js'
 
 class LandCheck extends Component {
 
