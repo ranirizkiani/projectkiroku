@@ -48,21 +48,21 @@ function Table({ data }) {
       <table>
         <thead>
           <tr>
-            <th className="land-check-th">メッシュコード</th>
-            <th className="land-check-th">経度緯度</th>
-            <th className="land-check-th">基準風速</th>
-            <th className="land-check-th">積雪量</th>
-            <th className="land-check-th">空き容量</th>
+            <th>メッシュコード</th>
+            <th>経度緯度</th>
+            <th>基準風速</th>
+            <th>積雪量</th>
+            <th>空き容量</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row) => (
             <tr>
-              <td className="land-check-td">{row['col_1']}</td>
-              <td className="land-check-td">{row['col_2']}</td>
-              <td className="land-check-td">{row['col_3']}</td>
-              <td className="land-check-td">{row['col_4']}</td>
-              <td className="land-check-td">{row['col_5']}</td>
+              <td>{row['col_1']}</td>
+              <td>{row['col_2']}</td>
+              <td>{row['col_3']}</td>
+              <td>{row['col_4']}</td>
+              <td>{row['col_5']}</td>
             </tr>
           ))}
 

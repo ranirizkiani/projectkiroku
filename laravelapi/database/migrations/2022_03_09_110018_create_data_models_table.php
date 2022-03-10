@@ -15,6 +15,10 @@ class CreateDataModelsTable extends Migration
     {
         Schema::create('data_models', function (Blueprint $table) {
             $table->id();
+            $table->string('tasklist');
+            $table->string('newtask');
+            $table->string('linenumber');
+            $table->string('date');
             $table->timestamps();
         });
     }

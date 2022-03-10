@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Button from './Button.js'
+import { Button } from './button/Button.js'
 
 import Table from './Table.js';
 // import PostForm from './components/PostForm.jsx'
