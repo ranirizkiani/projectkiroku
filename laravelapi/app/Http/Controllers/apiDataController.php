@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DataModel;
+use App\DataModel;
 
 class apiDataController extends Controller
 {
@@ -80,7 +80,7 @@ class apiDataController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $data = DataModel::fine(id);
+        $data = DataModel::find(id);
         $data->tasklist = $request->tasklist;
         $data->newtask = $request->newtask;
         $data->linenumber = $request->linenumber;
