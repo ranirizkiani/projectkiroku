@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/get-tasks', [App\Http\Controllers\apiDataController::class, 'index']);
+Route::post('/save-tasks', [App\Http\Controllers\TaskController::class, 'saveTasks']);

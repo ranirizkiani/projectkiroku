@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TaskList;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -43,9 +45,32 @@ class TaskController extends Controller
 // Purpose: save Task and TaskList from land check table
 // Input: land check table
 // output: <empty>
-    public function saveTask(Request $request)
+    public function saveTasks(Request $request)
     {
-        //
+        // step 1::saveTaskList
+        $taskList = new TaskList();
+        $taskList->number_of_line = count($request->input);
+        $taskList->save();
+        // step 2::saveTask
+        foreach ($request->input as $t) {
+           //    $table->string('task_list_id');
+           // $table->string('meshcode');
+           // $table->string('coordinate');
+           // $table->string('kijunfusoku');
+           // $table->string('sekisetsu');
+           //  $table->string('akiyouryou');
+           
+            $task = new Task();
+            $task->task_list_id = $taskList->id;
+            $task->meshcode = $t->meshcode;
+            $task->coordinate = $t->coordinate;
+            $task->kijunfusoku = $t->kijunfusoku;
+            $task->sekisetsu = $t->sekisetsu;
+            $task->akiyouryou = $t->akiyouryou;
+        
+            $task->save();
+        }
+        
     }
  
 //[ API 2 - GetTaskList ]

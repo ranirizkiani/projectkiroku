@@ -15,7 +15,7 @@ class CreateTaskListsTable extends Migration
     {
         Schema::create('task_lists', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
             $table->integer('number_of_line');
         });
     }
