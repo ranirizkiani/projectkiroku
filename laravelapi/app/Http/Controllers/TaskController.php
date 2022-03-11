@@ -62,11 +62,11 @@ class TaskController extends Controller
            
             $task = new Task();
             $task->task_list_id = $taskList->id;
-            $task->meshcode = $t->meshcode;
-            $task->coordinate = $t->coordinate;
-            $task->kijunfusoku = $t->kijunfusoku;
-            $task->sekisetsu = $t->sekisetsu;
-            $task->akiyouryou = $t->akiyouryou;
+            $task->meshcode = $t['meshcode'];
+            $task->coordinate = $t['coordinate'];
+            $task->kijunfusoku = $t['kijunfusoku'];
+            $task->sekisetsu = $t['sekisetsu'];
+            $task->akiyouryou = $t['akiyouryou'];
         
             $task->save();
         }
