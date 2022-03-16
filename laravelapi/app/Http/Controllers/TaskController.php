@@ -81,10 +81,10 @@ class TaskController extends Controller
     // Purpose: get tasks with certain TaskList id
     // Input: TaskList id
     // Output: array of Task dimana TaskListId nya sama dengan TaskList id dari input
-    public function getTasksByTaskListId(Request $request)
+    public function getTasksByTaskListId($id)
     {
 
-        $data = Task::where('task_list_id', $request->task_list_id)->get();
+        $data = Task::where('task_list_id', $id)->get();
         return $data;
         //
     }

@@ -3,10 +3,9 @@ import 'boxicons/css/boxicons.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppLayout from './components/layout/AppLayout';
 import React from 'react';
-import Task from './pages/Task.js';
-import Addtask from './pages/Addtask.js';
+import TaskList from './pages/TaskList.js';
 import LandCheck from './pages/LandCheck/LandCheck';
-import Result from './pages/Result';
+import Task from './pages/Task';
 
 function App() {
     return (
@@ -14,8 +13,8 @@ function App() {
             <Routes>
                 <Route path='/' element={<AppLayout />}>
                     <Route index element={<LandCheck />} />
-                    <Route path='/task' element={<Task />} />
-                    <Route path='/task/result/:id' element={<Result />} />
+                    <Route path='/tasklist' element={<TaskList />} />
+                    <Route path='/tasklist/task/:id' element={<Task />} />
                 </Route>
             </Routes>
         </BrowserRouter>

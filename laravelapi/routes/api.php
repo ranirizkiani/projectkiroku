@@ -21,4 +21,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/get-tasks', [App\Http\Controllers\apiDataController::class, 'index']);
 Route::post('/save-tasks', [App\Http\Controllers\TaskController::class, 'saveTasks']);
 Route::get('/get-task-lists', [App\Http\Controllers\TaskController::class, 'getTaskLists']);
-Route::get('/get-task-by-id', [App\Http\Controllers\TaskController::class, 'getTasksByTaskListId']);
+Route::get('/get-task-by-id/{id}', [App\Http\Controllers\TaskController::class, 'getTasksByTaskListId']);

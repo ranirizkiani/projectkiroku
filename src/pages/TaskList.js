@@ -1,29 +1,19 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-    useLocation,
-    useNavigate,
-    useParams,
-  } from "react-router-dom";
-  import axios from 'axios';
+import axios from 'axios';
 
-function Task() {
+function TaskList() {
 
-    let params = useParams();
-
-    console.log(params)
-    
     const [data, setData] = useState([])
 
     useEffect(() => {
         axios
-            .get("http://localhost:8000/api/get-task-by-id/" + params['id'])
+            .get("http://localhost:8000/api/get-task-lists")
             .then((res) => {
+                console.log(res)
                 setData(res.data)
             })
     }, [])
-
-    
 
     return (
         <div className="container">
@@ -31,36 +21,29 @@ function Task() {
                 <div className="col-md-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4>Task</h4>
+                            <h4>Task List
+                                <Link to={'add-task'} className="btn btn-primary btn-sm float-end"> Add Task</Link>
+                            </h4>
                         </div>
                         <div className="card-body">
                             <table className="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Meshcode</th>
-                                        <th>Coordinate</th>
-                                        <th>Kijunfusoku</th>
-                                        <th>Sekisetsu</th>
-                                        <th>Akiyouryou</th>
-                                        <th>Task List Id</th>
+                                        <th>Number of Line</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.map(row => {
                                         return (
                                             <tr key={row['id']}>
-                                                <td>{row['id']}</td>
-                                                <td>{row['meshcode']}</td>
-                                                <td>{row['coordinate']}</td>
-                                                <td>{row['kijunfusoku']}</td>
-                                                <td>{row['sekisetsu']}</td>
-                                                <td>{row['akiyouryou']}</td>
-                                                <td>{row['task_list_id']}</td>
+                                                <td><Link to={'/tasklist/task/' + row['id']}>{row['id']}</Link></td>
+                                                <td>{row['number_of_line']}</td>
+                                                <td>{row['created_at']}</td>
                                             </tr>
                                         )
                                     })}
-                                    
                                 </tbody>
                             </table>
                         </div>
@@ -69,8 +52,7 @@ function Task() {
             </div>
         </div>
     );
-
 }
 
 
-export default Task;
+export default TaskList;
