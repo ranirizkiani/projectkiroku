@@ -53,12 +53,6 @@ class TaskController extends Controller
         $taskList->save();
         // step 2::saveTask
         foreach ($request->input as $t) {
-           //    $table->string('task_list_id');
-           // $table->string('meshcode');
-           // $table->string('coordinate');
-           // $table->string('kijunfusoku');
-           // $table->string('sekisetsu');
-           //  $table->string('akiyouryou');
            
             $task = new Task();
             $task->task_list_id = $taskList->id;
@@ -79,6 +73,8 @@ class TaskController extends Controller
 // Output: array of TaskList
     public function getTaskLists(Request $request)
     {
+        $data = TaskList::all();
+        return $data;
         //
     }
     // [ API 3 - GetTaskByTaskListId ]
@@ -87,6 +83,9 @@ class TaskController extends Controller
     // Output: array of Task dimana TaskListId nya sama dengan TaskList id dari input
     public function getTasksByTaskListId(Request $request)
     {
+
+        $data = Task::where('task_list_id', $request->task_list_id)->get();
+        return $data;
         //
     }
 
