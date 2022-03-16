@@ -78,6 +78,7 @@ function PostForm() {
     function handleApiResponse(responseData) {
         let result = responseData['result']
         let tableData = []
+        let saveData = []
 
         /*
             0 -> ✕
@@ -138,11 +139,26 @@ function PostForm() {
                 'col_4': col4Val,
                 'col_5': col5Val
             })
+            saveData.push({
+                'meshcode': col1Val,
+                'coordinate': col2Val,
+                'kijunfusoku': col3Val,
+                'sekisetsu': col4Val,
+                'akiyouryou': col5Val
+            })
         }
 
+        let payload = {
+            'input': saveData
+        }
+        axios.post('http://localhost:8000/api/save-tasks', payload)
+            .then(res => {
+                setData(tableData)
+            })
+            .catch(err => {
+                alert(err)
+            })
         
-
-        setData(tableData)
     }
 
     function submitForm(e) {
