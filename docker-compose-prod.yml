@@ -1,0 +1,56 @@
+version: '3'
+services:
+  # dbmysql:
+  #   build:
+  #     context: .
+  #     dockerfile: ./web/dbmysql/Dockerfile
+  #   container_name: database
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     MYSQL_DATABASE: xxxxx
+  #     MYSQL_ROOT_PASSWORD: xxxxx
+  #     MYSQL_USER: xxxxxx
+  #     MYSQL_PASSWORD: xxxxxx
+  # php:
+  #   build:
+  #     context: .
+  #     dockerfile: ./web/Dockerfile
+  #   working_dir: /var/www/laravel
+  #   container_name: php
+  #   volumes:
+  #     - php1:/var/www/laravel
+  #   depends_on:
+  #     - dbmysql
+  #   entrypoint:
+  #     - php-fpm
+
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   working_dir: /var/www/laravel
+  #   volumes:
+  #     - ./web/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - php1:/var/www/laravel
+  #   links:
+  #     - php
+  #   ports:
+  #     - 8080:80
+  app:
+      container_name: reactapp
+      image: reactapp:latest
+      build:
+          context: .
+          args:
+            - NODE_TAG=12.8
+            - NGINX_TAG=alpine
+          dockerfile: ./client/Dockerfile
+      # depends_on:
+      #   - nginx
+      environment:
+          - NODE_ENV=production
+      ports:
+          - 8004:82
+      restart: always
+volumes:
+  php1:
