@@ -22,16 +22,16 @@ function TaskList() {
                     <div className="card">
                         <div className="card-header">
                             <h4>Task List
-                                <Link to={'add-task'} className="btn btn-primary btn-sm float-end"> Add Task</Link>
+                                <Link to={'/'} className="btn btn-primary btn-sm float-end"> Add Task</Link>
                             </h4>
                         </div>
                         <div className="card-body">
                             <table className="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Number of Line</th>
-                                        <th>Date</th>
+                                        <th>ID</th>
+                                        <th>行数</th>
+                                        <th>Timestamp</th>
                                     </tr>
                                 </thead>
                                 <tbody>

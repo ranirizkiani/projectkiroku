@@ -30,8 +30,8 @@ class Addtask extends Component {
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Add Task
-                                    <Link to={'/'} className="btn btn-primary btn-sm float-end"> Back</Link>
+                                <h4>タスク実行
+                                    <Link to={'/'} className="btn btn-primary btn-sm float-end"> 戻る</Link>
                                 </h4>
                             </div>
                             <div className="card-body"></div>
@@ -51,7 +51,7 @@ class Addtask extends Component {
                                 </div>
 
                                 <div className="form-group mb-3">
-                                    <button type="submit" className="btn btn-primary">Save Task</button>
+                                    <button type="submit" className="btn btn-primary">タスクの保存</button>
                                 </div>
                             </form>
                         </div>

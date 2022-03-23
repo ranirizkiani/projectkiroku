@@ -3,66 +3,7 @@ import axios from 'axios';
 import { Button } from './button/Button.js'
 
 import Table from './Table.js';
-// import PostForm from './components/PostForm.jsx'
 
-/*
-
-37.1719383999999,140.0346593,
-36.99277,140.77859,
-35.9937171,140.5333251,
-35.7952537,140.6386735,
-35.9022891,139.3134128,
-35.5461953,138.9399811,
-35.468426,138.751466,
-35.1826928,138.5707699,
-34.792018,138.118217,
-34.88268,135.05066,
-34.845717,134.001141,
-34.5112827,133.7908678
-
-*/
-
-const dummyData = {
-    "result": [
-        {
-            "hazard_info": {
-                "fourth_mesh_code": 533946304,
-                "土砂災害危険箇所": 1,
-                "土砂災害警戒区域": 0,
-                "塩害": 0,
-                "津波浸水想定": 0,
-                "洪水浸水想定区域": 0,
-                "重塩害": 0
-            },
-            "land_info": {
-                "fourth_mesh_code": 644125502,
-                "基準風速": 1,
-                "積雪量": 0,
-                "空き容量": 2
-            },
-            "meshcode": 644125502
-        },
-        {
-            "hazard_info": {
-                "fourth_mesh_code": 644125502,
-                "土砂災害危険箇所": 0,
-                "土砂災害警戒区域": 0,
-                "塩害": 0,
-                "津波浸水想定": 0,
-                "洪水浸水想定区域": 1,
-                "重塩害": 0
-            },
-            "land_info": {
-                "fourth_mesh_code": 533946304,
-                "基準風速": 1,
-                "積雪量": 0,
-                "空き容量": 2
-            },
-            "meshcode": 533946304
-        }
-    ],
-    "status": 200
-}
 
 function PostForm() {
     const url = ""
@@ -74,6 +15,8 @@ function PostForm() {
 
     // table data
     const [data, setData] = useState([])
+
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleApiResponse(responseData) {
         let result = responseData['result']
@@ -212,20 +155,20 @@ function PostForm() {
 
         console.log(payload)
         // Call API
+        setIsLoading(true)
         axios.post('http://greenmap.afterfit.jp:8003/land_check', payload)
             .then(function (response) {
                 // TODO: change dummy data to actual API response data
                 let data = response.data // response.data
+                setIsLoading(false)
                 handleApiResponse(data)
             })
             .catch(function (error) {
+                setIsLoading(false)
                 console.log('ERROR...')
                 alert('Error')
                 console.log(error)
 
-                // TODO: delete this
-                let data = dummyData
-                handleApiResponse(data)
             });
     }
 
@@ -252,9 +195,17 @@ function PostForm() {
 
     // alert(data)
 
+    if (isLoading == true) {
+        return (
+            <div className="App">
+               <img src="https://thumbs.gfycat.com/CheerfulGreatAmurstarfish.webp" />
+            </div>
+        )
+    }
+
     return (
         <div>
-            <div>
+            <div className='card lc-form rounded'>
                 <form onSubmit={(e) => submitForm(e)}>
 
                     <div className="formInput">
@@ -262,6 +213,7 @@ function PostForm() {
                             <label>住所</label>
                             <br />
                             <textarea
+                                className='lc-form-textarea'
                                 onChange={(e) => handleAddress(e)}
                                 id="address"
                                 placeholder="住所を送信してください"
@@ -274,6 +226,7 @@ function PostForm() {
                             <label>経度緯度</label>
                             <br />
                             <textarea
+                                className='lc-form-textarea'
                                 onChange={(e) => handleCoordinates(e)}
                                 id="coordinates"
                                 placeholder="経度緯度を送信してください"
@@ -284,7 +237,7 @@ function PostForm() {
                     </div>
 
                     <div>
-                        <br /> <Button>送信</Button>
+                        <Button>送信</Button>
 
                     </div>
 
@@ -293,7 +246,7 @@ function PostForm() {
 
             <Table data={data} />
 
-            <button onClick={resetTable}>リセット</button>
+            {/* <button onClick={resetTable}>リセット</button> */}
 
         </div >
     );
