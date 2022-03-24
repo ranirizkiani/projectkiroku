@@ -1,22 +1,32 @@
-FROM php:7.3-fpm-alpine
-
-RUN apk add libzip-dev mysql
-RUN docker-php-ext-configure zip --with-libzip
-RUN docker-php-ext-install pdo pdo_mysql zip mysqli
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
-COPY ./web/php.ini /usr/local/etc/php/
-COPY ./web/entrypoint-prod.sh /var/www/laravel/web/entrypoint-prod.sh
-RUN chmod +x /var/www/laravel/web/entrypoint-prod.sh
-
-COPY ./web/ /var/www/laravel
-WORKDIR /var/www/laravel
-RUN chmod -R 775 storage
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_NO_INTERACTION 1
-RUN composer install --no-interaction --no-scripts --no-autoloader -d /var/www/laravel && composer dump-autoload --optimize
+ARG NODE_TAG=17.5.0
+ARG NGINX_TAG=alpine
+ARG APP_HOME=/home/node/app
 
 
-RUN php artisan key:generate
-WORKDIR /var/www/
-RUN chown -R www-data:www-data laravel
+# build stage
+FROM node:${NODE_TAG} as build
+ARG NODE_TAG
+ARG APP_HOME
+
+WORKDIR ${APP_HOME}
+COPY ./package*.json ${APP_HOME}/
+RUN echo -n 'node '; node -v; \
+    echo -n 'npm '; npm -v ; \
+    echo -n 'npm '; npm audit fix ; \
+    npm install --production
+
+COPY ./src ${APP_HOME}/src/
+COPY ./public ${APP_HOME}/public/
+RUN npm run build
+
+# deploy stage
+FROM nginx:${NGINX_TAG}
+ARG NGINX_TAG
+ARG APP_HOME
+RUN echo "nginx:${NGINX_TAG}" > /docker-image-tag && cat /docker-image-tag
+COPY --from=build ${APP_HOME}/build /usr/share/nginx/html
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/htpasswd /etc/nginx/htpasswd
+# check network : RUN apk add --no-cache curl
+WORKDIR /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]
