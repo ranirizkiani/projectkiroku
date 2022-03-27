@@ -23,6 +23,8 @@ docker exec -it php sh
 
 以下のコマンドを実行する
 
+php artisan key:generate
+
 php artisan migrate
 
 php artisan migrate:fresh

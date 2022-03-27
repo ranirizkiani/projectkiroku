@@ -1,65 +1,72 @@
 version: '3'
 services:
+  php:
+    build:
+      args:
+        user: rani
+        uid: 1000
+      context: ./
+      dockerfile: ./web/Dockerfile
+    container_name: php-app
+    restart: unless-stopped
+    # tty: true
+    # environment:
+    #   SERVICE_NAME: php
+    #   SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./web/:/var/www
+      # - ./web/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - app-network
+
   db:
-    image: mysql:5.7.32
+    image: mysql:5.7
     container_name: db
     # build:
     #   context: .
     #   dockerfile: ./web/db/Dockerfile
-    ports:
-      - 3307:3306
+    # ports:
+    #   - 3307:3306
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel_web
-      MYSQL_ROOT_PASSWORD: replace_mysql_root_password
-      MYSQL_USER: dev
-      MYSQL_PASSWORD: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./web/mysql/my.cnf:/etc/mysql/my.cnf
-  php:
-    build:
-      context: .
-      dockerfile: ./web/Dockerfile
-    container_name: php
-    restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: php
+      MYSQL_ROOT_PASSWORD: some_custom_password
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: some_custom_password
       SERVICE_TAGS: dev
-    working_dir: /var/www/html/
-    volumes:
-      - ./web/:/var/www/html/
-      - ./web/php.ini:/usr/local/etc/php/conf.d/php.ini
-    # ports:
-    #   - 8000:9000
+      SERVICE_NAME: mysql
     networks:
       - app-network
+    # volumes:
+    #   - dbdata:/var/lib/mysql/
+    #   - ./web/mysql/my.cnf:/etc/mysql/my.cnf
 
   nginx:
-    image: nginx:alpine
+    image: nginx:1.17-alpine
     container_name: nginx
     restart: unless-stopped
-    tty: true
+    # tty: true
     ports:
-      - 80:80
-      - 443:443
+      - 8000:80
+      # - 443:443
       # - 8004:82
     # working_dir: /var/www/laravel
     volumes:
-      - ./web/:/var/www/html/
-      - ./web/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./web/:/var/www
+      - ./nginx:/etc/nginx/conf.d
       # - ./client/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
       - app-network
 
-  # web:
-  #   container_name: web
-  #   build: ./client
-  #   ports:
-  #     - 8004:82
-  #   restart: always
-  #   networks:
-  #     - app-network
+  web:
+    container_name: web
+    build: ./client
+    ports:
+      - 8004:82
+    restart: always
+    networks:
+      - app-network
 
 #Docker Networks
 networks:
@@ -67,6 +74,6 @@ networks:
     driver: bridge
 
 #Volumes
-volumes:
-  dbdata:
-    driver: local
+# volumes:
+#   dbdata:
+#     driver: local
