@@ -8,7 +8,7 @@ function TaskList() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8000/api/get-task-lists")
+            .get(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/get-task-lists`)
             .then((res) => {
                 console.log(res)
                 setData(res.data)

@@ -20,7 +20,7 @@ function Task() {
     useEffect(() => {
         setIsLoading(true)
         axios
-            .get("http://localhost:8000/api/get-task-by-id/" + params['id'])
+            .get(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/get-task-by-id/${params['id']}`)
             .then((res) => {
                 setIsLoading(false)
                 setData(res.data)

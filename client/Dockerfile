@@ -1,12 +1,14 @@
 ARG NODE_TAG=17.5.0
 ARG NGINX_TAG=alpine
 ARG APP_HOME=/home/node/app
+ARG REACT_APP_BACKEND_ADDRESS=zzzzzzzz
 
 
 # build stage
 FROM node:${NODE_TAG} as build
 ARG NODE_TAG
 ARG APP_HOME
+ARG REACT_APP_BACKEND_ADDRESS
 
 WORKDIR ${APP_HOME}
 COPY ./package*.json ${APP_HOME}/
@@ -17,6 +19,7 @@ RUN echo -n 'node '; node -v; \
 
 COPY ./src ${APP_HOME}/src/
 COPY ./public ${APP_HOME}/public/
+ENV REACT_APP_BACKEND_ADDRESS $REACT_APP_BACKEND_ADDRESS
 RUN npm run build
 
 # deploy stage
