@@ -36,11 +36,25 @@ function TaskList() {
                                 </thead>
                                 <tbody>
                                     {data.map(row => {
+                                        let rawDateTime = row['created_at']
+
+                                        let s = new Date(rawDateTime);
+
+                                        let tokyoTime = new Date(s.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }))
+
+                                        let tokyoTimeString = tokyoTime.toISOString()
+
+                                        let res = tokyoTimeString.split('T');
+
+                                        let parsedDate = res[0];
+                                        let parsedTime = res[1].split('.')[0]; 
+                                        
+                                        let formattedDateTime = `${parsedDate} ${parsedTime}`
                                         return (
                                             <tr key={row['id']}>
                                                 <td><Link to={'/tasklist/task/' + row['id']}>{row['id']}</Link></td>
                                                 <td>{row['number_of_line']}</td>
-                                                <td>{row['created_at']}</td>
+                                                <td>{formattedDateTime}</td>
                                             </tr>
                                         )
                                     })}
